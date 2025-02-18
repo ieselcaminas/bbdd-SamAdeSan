@@ -1,3 +1,4 @@
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class MainRS {
         return connection;
     }
     public static void main(String[] args) throws SQLException {
+        connection = getConnection();
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         while (opcion != -1) {
