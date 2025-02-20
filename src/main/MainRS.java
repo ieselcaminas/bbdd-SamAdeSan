@@ -1,13 +1,13 @@
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainRS {
     static java.sql.Connection connection;
-
-    public static java.sql.Connection getConnection() throws SQLException {
-        String host = "jjdbc:sqlite:src/main/resources/network.sqlite";
+    static String usuario = "";
+    static int id_usuario = -1;
+    public static java.sql.Connection getConnection(){
+        String host = "jdbc:sqlite:src/main/resources/network.sqlite";
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(host);
@@ -23,13 +23,37 @@ public class MainRS {
         connection = getConnection();
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
-        while (opcion != -1) {
-            System.out.println("1 - Usuarios");
-            System.out.println("2 - Posts");
-            System.out.println("3 - Comentarios");
+        while (opcion != 4) {
+
+            System.out.println("*-_Red Social_-*");
+            System.out.println("|");
+
+            if (!usuario.isEmpty()) {
+                System.out.println("Bienvenido " + usuario + "!");
+            }else {
+                System.out.println("Bienvenido! - No logueado");
+            }
+            System.out.println("|______________________________________________________");
+            System.out.println("| 1 - Usuarios | 2 - Posts | 3 - Comentarios | 4 - Salir |");
+            System.out.println(" -------------------------------------------------------");
+
             opcion = sc.nextInt();
             if (opcion == 1) {
                 GestionUsuarios.gestionMenu();
+            }
+            else if (opcion == 2) {
+                GestionPosts.gestionPosts();
+            }
+            else if (opcion == 3) {
+                GestionComentarios.gestionComentarios();
+            }
+            else if (opcion == 4) {
+                System.out.println("Gracias por usar el programa :). Adiós.");
+            }
+            else {
+                System.out.println("NO VÁLIDO. ERROR");
+                System.out.println("Introduzca de nuevo un botón válido.");
+                MainRS.main(args);
             }
         }
     }
