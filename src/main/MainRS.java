@@ -27,15 +27,13 @@ public class MainRS {
 
             System.out.println("*-_Red Social_-*");
             System.out.println("|");
-
             if (!usuario.isEmpty()) {
                 System.out.println("Bienvenido " + usuario + "!");
-            }else {
-                System.out.println("Bienvenido! - No logueado");
-            }
-            System.out.println("|______________________________________________________");
-            System.out.println("| 1 - Usuarios | 2 - Posts | 3 - Comentarios | 4 - Salir |");
-            System.out.println(" -------------------------------------------------------");
+            }else System.out.println("Bienvenido! - No logueado");
+
+            System.out.println("|__________________________________________________________");
+            System.out.println("| 1 - Usuarios | 2 - Posts | 3 - Comentarios || 4 - Salir |");
+            System.out.println(" ----------------------------------------------------------");
 
             opcion = sc.nextInt();
             if (opcion == 1) {

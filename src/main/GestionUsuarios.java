@@ -8,9 +8,9 @@ public class GestionUsuarios {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         while (opcion != -1) {
-            System.out.println("_________________________________________________________________________________________________");
-            System.out.println(" 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) | 4 - Salir de Usuarios  |");
-            System.out.println("-------------------------------------------------------------------------------------------------");
+            System.out.println("___________________________________________________________________________________________________");
+            System.out.println(" 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) || 4 - Salir de Usuarios  |");
+            System.out.println("---------------------------------------------------------------------------------------------------");
             opcion = sc.nextInt();
             if (opcion == 1) {
                 String usuario  = existeUsuario();
@@ -36,19 +36,23 @@ public class GestionUsuarios {
         // Creamos la conexión al host.
         java.sql.Connection con = MainRS.connection;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Introduce tu nombre: ");
-        String nombre = sc.nextLine();
+        System.out.println("Introduce tu usuario: ");
+        String usuario = sc.nextLine();
         System.out.println("Introduce tu contraseña: ");
         String contrasena = sc.nextLine();
 
         // Hacer una consulta ya preparada
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM usuarios WHERE nombre = ? AND contrasenya = ?");
-        ps.setString(1, nombre);
+        PreparedStatement ps = con.prepareStatement(
+                "SELECT * " +
+                     "FROM usuarios " +
+                     "WHERE nombre = ? AND contrasenya = ?"
+        );
+        ps.setString(1, usuario);
         ps.setString(2, contrasena);
         ResultSet rs = ps.executeQuery();
         if (rs.next()){
             MainRS.id_usuario = rs.getInt(1);
-            return nombre;
+            return usuario;
         }
         return "";
     }
@@ -62,7 +66,10 @@ public class GestionUsuarios {
         String apellido = sc.nextLine();
         System.out.println("Introduce tu contraseña");
         String contrasena = sc.nextLine();
-        PreparedStatement ps = con.prepareStatement("Insert into usuarios (nombre, apellidos, contrasenya) VALUES (?, ?, ?)");
+        PreparedStatement ps = con.prepareStatement(
+                "Insert into usuarios (nombre, apellidos, contrasenya) " +
+                        "VALUES (?, ?, ?)"
+        );
         ps.setString(1, nombre);
         ps.setString(2, apellido);
         ps.setString(3, contrasena);
