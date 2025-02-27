@@ -7,6 +7,7 @@ public class GestionUsuarios {
     public static void gestionMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
+        // secciones
         while (opcion != -1) {
             System.out.println("___________________________________________________________________________________________________");
             System.out.println(" 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) || 4 - Salir de Usuarios  |");
@@ -15,7 +16,7 @@ public class GestionUsuarios {
             if (opcion == 1) {
                 String usuario  = existeUsuario();
                 if (!usuario.isEmpty()) {
-                    System.out.println("Usuario logueado con éxito");
+                    System.out.println("Usuario logueado con éxito!");
                     MainRS.usuario = usuario;
                     break;
                 }
@@ -28,7 +29,6 @@ public class GestionUsuarios {
             }
             else {
                 System.out.println("Usuario no encontrado");
-                GestionUsuarios.gestionMenu();
             }
         }
     }
@@ -57,7 +57,7 @@ public class GestionUsuarios {
         return "";
     }
     public static String insertarUsuario() throws SQLException {
-        //
+        // Insertamos un usuario con los datos que queremos poner a demás de conectarnos al host
         java.sql.Connection con = MainRS.connection;
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce tu nombre: ");
@@ -66,10 +66,12 @@ public class GestionUsuarios {
         String apellido = sc.nextLine();
         System.out.println("Introduce tu contraseña");
         String contrasena = sc.nextLine();
+        // consulta
         PreparedStatement ps = con.prepareStatement(
                 "Insert into usuarios (nombre, apellidos, contrasenya) " +
                         "VALUES (?, ?, ?)"
         );
+        //forma de los resultados
         ps.setString(1, nombre);
         ps.setString(2, apellido);
         ps.setString(3, contrasena);

@@ -6,6 +6,7 @@ public class MainRS {
     static java.sql.Connection connection;
     static String usuario = "";
     static int id_usuario = -1;
+    // Conexión a la Base de Datos de SQLite
     public static java.sql.Connection getConnection(){
         String host = "jdbc:sqlite:src/main/resources/network.sqlite";
         if (connection == null) {
@@ -23,10 +24,12 @@ public class MainRS {
         connection = getConnection();
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
+        // secciones
         while (opcion != 4) {
 
             System.out.println("*-_Red Social_-*");
             System.out.println("|");
+
             if (!usuario.isEmpty()) {
                 System.out.println("Bienvenido " + usuario + "!");
             }else System.out.println("Bienvenido! - No logueado");
@@ -46,7 +49,7 @@ public class MainRS {
                 GestionComentarios.gestionComentarios();
             }
             else if (opcion == 4) {
-                System.out.println("Gracias por usar el programa :). Adiós.");
+                System.out.println("Gracias por usar el programa de red social ;). Adiós.");
             }
             else {
                 System.out.println("NO VÁLIDO. ERROR");
