@@ -6,33 +6,45 @@ import java.util.Scanner;
 public class GestionUsuarios {
     public static void gestionMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
-        int opcion = 0;
+        int opcion;
         // secciones
-        while (opcion != -1) {
-            System.out.println("___________________________________________________________________________________________________");
-            System.out.println(" 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) || 4 - Salir de Usuarios  |");
-            System.out.println("---------------------------------------------------------------------------------------------------");
+        while (true) {
+            System.out.println(ColoresDeSocialNetwork.BLUE.getCode() +
+                    "___________________________________________________________________________________________________\n" +
+                    " 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) || " + ColoresDeSocialNetwork.RED.getCode() + "4 - Salir de Usuarios  " + ColoresDeSocialNetwork.BLUE.getCode() + "|\n" +
+                    "---------------------------------------------------------------------------------------------------"
+            );
             opcion = sc.nextInt();
-            if (opcion == 1) {
-                String usuario  = existeUsuario();
-                if (!usuario.isEmpty()) {
-                    System.out.println("Usuario logueado con éxito!");
-                    MainRS.usuario = usuario;
+
+            switch (opcion) {
+                case 1:
+                    String usuario  = existeElUsuario();
+                    if (usuario.isEmpty()) {
+                        System.out.println(ColoresDeSocialNetwork.RED.getCode() +
+                                "El usuario no existe o no se encuentra.\n" +
+                                "Si el problema persiste, puede ser porque está mal el usuario o la contraseña."
+                        );
+                    }else{
+                        System.out.println(ColoresDeSocialNetwork.GREEN.getCode() + "Logueado con éxito!");
+                        MainRS.usuario = usuario;
+                        break;
+                    }
                     break;
-                }
-            }
-            else if (opcion == 2) {
-                System.out.println("Usuario en la cuenta: " + insertarUsuario());
-            }
-            else if (opcion == 4) {
-                MainRS.main(null);
-            }
-            else {
-                System.out.println("Usuario no encontrado");
+                case 2:
+                    System.out.println(ColoresDeSocialNetwork.YELLOW.getCode() + "Usuario en la cuenta: " + insertarNuevoUsuario());
+                    break;
+                case 4:
+                    System.out.println("Saliendo de Usuarios...");
+                    MainRS.main(null);
+                    return;
+                default:
+                    System.out.println(ColoresDeSocialNetwork.RED.getCode() + "ERROR. Formato no válido (la opción no existe)" + ColoresDeSocialNetwork.RESET.getCode());
+                    break;
             }
         }
     }
-    public static String existeUsuario() throws SQLException {
+
+    public static String existeElUsuario() throws SQLException {
         // Creamos la conexión al host.
         java.sql.Connection con = MainRS.connection;
         Scanner sc = new Scanner(System.in);
@@ -54,9 +66,10 @@ public class GestionUsuarios {
             MainRS.id_usuario = rs.getInt(1);
             return usuario;
         }
+
         return "";
     }
-    public static String insertarUsuario() throws SQLException {
+    public static String insertarNuevoUsuario() throws SQLException {
         // Insertamos un usuario con los datos que queremos poner a demás de conectarnos al host
         java.sql.Connection con = MainRS.connection;
         Scanner sc = new Scanner(System.in);

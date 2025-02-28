@@ -3,10 +3,11 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainRS {
-    static java.sql.Connection connection;
+
     static String usuario = "";
     static int id_usuario = -1;
     // Conexión a la Base de Datos de SQLite
+    static java.sql.Connection connection;
     public static java.sql.Connection getConnection(){
         String host = "jdbc:sqlite:src/main/resources/network.sqlite";
         if (connection == null) {
@@ -27,17 +28,28 @@ public class MainRS {
         // secciones
         while (opcion != 4) {
 
-            System.out.println("*-_Red Social_-*");
-            System.out.println("|");
+            System.out.println(ColoresDeSocialNetwork.GREEN.getCode() +
+                            "╔════════════════════════════════════════════════════════════════════════╗\n" +
+                            "║██████╗ ███████╗██████╗     ███████╗ ██████╗  ██████╗██╗ █████╗ ██╗     ║\n" +
+                            "║██╔══██╗██╔════╝██╔══██╗    ██╔════╝██╔═══██╗██╔════╝██║██╔══██╗██║     ║\n" +
+                            "║██████╔╝█████╗  ██║  ██║    ███████╗██║   ██║██║     ██║███████║██║     ║\n" +
+                            "║██╔══██╗██╔══╝  ██║  ██║    ╚════██║██║   ██║██║     ██║██╔══██║██║     ║\n" +
+                            "║██║  ██║███████╗██████╔╝    ███████║╚██████╔╝╚██████╗██║██║  ██║███████╗║\n" +
+                            "║╚═╝  ╚═╝╚══════╝╚═════╝     ╚══════╝ ╚═════╝  ╚═════╝╚═╝╚═╝  ╚═╝╚══════╝║\n" +
+                            "╚════════════════════════════════════════════════════════════════════════╝"
+                    );
+            System.out.println(ColoresDeSocialNetwork.RESET.getCode());
 
             if (!usuario.isEmpty()) {
-                System.out.println("Bienvenido " + usuario + "!");
-            }else System.out.println("Bienvenido! - No logueado");
-
-            System.out.println("|__________________________________________________________");
-            System.out.println("| 1 - Usuarios | 2 - Posts | 3 - Comentarios || 4 - Salir |");
-            System.out.println(" ----------------------------------------------------------");
-
+                System.out.println("Bienvenido " + ColoresDeSocialNetwork.GREEN.getCode() + usuario + "!");
+            }else {
+                System.out.println("Bienvenido! -" + ColoresDeSocialNetwork.RED.getCode() + " No logueado");
+            }
+            System.out.println(ColoresDeSocialNetwork.BLUE.getCode() +
+                    "__________________________________________________________\n" +
+                    "| 1 - Usuarios | 2 - Posts | 3 - Comentarios || " + ColoresDeSocialNetwork.RED.getCode() + "4 - Salir " + ColoresDeSocialNetwork.BLUE.getCode() + "|\n" +
+                    "----------------------------------------------------------"
+            );
             opcion = sc.nextInt();
             if (opcion == 1) {
                 GestionUsuarios.gestionMenu();
@@ -49,11 +61,13 @@ public class MainRS {
                 GestionComentarios.gestionComentarios();
             }
             else if (opcion == 4) {
-                System.out.println("Gracias por usar el programa de red social ;). Adiós.");
+                System.out.println(ColoresDeSocialNetwork.YELLOW.getCode() + "Gracias por usar el programa de red social ;). Adiós.");
             }
             else {
-                System.out.println("NO VÁLIDO. ERROR");
-                System.out.println("Introduzca de nuevo un botón válido.");
+                System.out.println(ColoresDeSocialNetwork.RED.getCode() +
+                        "NO VÁLIDO. ERROR\n" +
+                        "Introduzca de nuevo un botón válido." + ColoresDeSocialNetwork.RESET.getCode()
+                );
                 MainRS.main(args);
             }
         }

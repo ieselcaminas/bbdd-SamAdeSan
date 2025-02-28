@@ -6,25 +6,30 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class GestionPosts {
-    static int id_post = 0;
     public static void gestionPosts() throws SQLException {
         Scanner sc = new Scanner(System.in);
-        int opcion = 0;
+        int opcion;
         // Opciones de la sección.
-        while (opcion != -1) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" 1 - Postear | 2 - Listar mis Posts || 4 - Salir de Posts  |");
-            System.out.println("------------------------------------------------------------");
+        while (true) {
+            System.out.println(ColoresDeSocialNetwork.BLUE.getCode() +
+                    "____________________________________________________________\n" +
+                    " 1 - Postear | 2 - Listar mis Posts ||" + ColoresDeSocialNetwork.RED.getCode() + " 4 - Salir de Posts  " + ColoresDeSocialNetwork.BLUE.getCode() + "|\n" +
+                    "------------------------------------------------------------" + ColoresDeSocialNetwork.RESET.getCode()
+            );
             opcion = sc.nextInt();
             switch (opcion) {
-                case 1: GestionPosts.nuevoPost();
-                break;
-                case 2: GestionPosts.listarTodosLosPosts();
-                case 4: return;
+                case 1:
+                    GestionPosts.nuevoPost();
+                    break;
+                case 2:
+                    GestionPosts.listarTodosLosPosts();
+                case 4:
+                    return;
                 default:
-                    System.out.println("NO VÁLIDO. ERROR");
-                    System.out.println("Introduzca de nuevo un botón válido.");
-                break;
+                    System.out.println(ColoresDeSocialNetwork.RED.getCode() + "NO VÁLIDO. ERROR\n" +
+                            "Introduzca de nuevo un botón válido." + ColoresDeSocialNetwork.RESET.getCode()
+                    );
+                    break;
             }
         }
     }
@@ -59,10 +64,10 @@ public class GestionPosts {
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            System.out.println(rs.getInt(1));
-            System.out.println(rs.getString(2));
-            System.out.println(rs.getDate(3));
-            System.out.println(rs.getString(4));
+            System.out.println("Post " + rs.getInt(1));
+            System.out.println("\tConcepto: " + rs.getString(2));
+            System.out.println("\tFecha: " + rs.getDate(3));
+            System.out.println("\t" + rs.getString(4));
 
         }
     }

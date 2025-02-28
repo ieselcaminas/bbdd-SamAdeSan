@@ -5,26 +5,28 @@ import java.util.Scanner;
 public class GestionComentarios {
     public static void gestionComentarios() throws SQLException {
         Scanner sc = new Scanner(System.in);
-        int opcion = 0;
+        int opcion;
         // Opciones de los Comentarios
-        while (opcion != -1) {
-            System.out.println("_________________________________________________________________________");
-            System.out.println(" 1 - Ver comentarios | 2 - Comentar un post || 4 - Salir de Comentarios |");
-            System.out.println("-------------------------------------------------------------------------");
+        while (true) {
+            System.out.println(ColoresDeSocialNetwork.BLUE.getCode() +
+                    "_________________________________________________________________________\n" +
+                    " 1 - Ver comentarios | 2 - Comentar un post || " + ColoresDeSocialNetwork.RED.getCode() + "4 - Salir de Comentarios " + ColoresDeSocialNetwork.BLUE.getCode() + "|\n" +
+                    "-------------------------------------------------------------------------"
+            );
             opcion = sc.nextInt();
-            if (opcion == 1) {
-                verComentariosDePosts();
-            }
-            else if (opcion == 2) {
-                comentarPost();
-            }
-            else if (opcion == 4) {
-                break;
-            }
-            else {
-                System.out.println("NO VÁLIDO. ERROR");
-                System.out.println("Introduzca de nuevo un botón válido.");
-                gestionComentarios();
+            switch (opcion) {
+                case 1:
+                    verComentariosDePosts();
+                    break;
+                case 2:
+                    comentarPost();
+                    break;
+                default:
+                    System.out.println(ColoresDeSocialNetwork.RED.getCode() + "NO VÁLIDO. ERROR \n" +
+                            "Introduzca de nuevo un botón válido." + ColoresDeSocialNetwork.RESET.getCode()
+                    );
+                    gestionComentarios();
+                    break;
             }
         }
     }
@@ -36,7 +38,7 @@ public class GestionComentarios {
         System.out.println("Selecciona el post que desea comentar: ");
         int post_id = Integer.parseInt(sc.nextLine());
 
-        System.out.println("Comentar: ");
+        System.out.println("Comentar comentario: ");
         String texto = sc.nextLine();
 
         java.sql.Date fecha = new java.sql.Date(new Date().getTime());
@@ -62,15 +64,14 @@ public class GestionComentarios {
                         "INNER JOIN posts as p on c.id_post = p.id " +
                         "WHERE c.id_post = ?"
         );
-        //pst.setInt(1, GestionPosts.id_post);
         pst.setInt(1, 5);
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             System.out.println(rs.getInt(1));
-            System.out.println(rs.getString(2));
-            System.out.println(rs.getDate(3));
-            System.out.println(rs.getString(4));
+            System.out.println("\t" + rs.getString(2));
+            System.out.println("\t" + rs.getDate(3));
+            System.out.println("\t\t" + rs.getString(4));
         }
     }
 }
