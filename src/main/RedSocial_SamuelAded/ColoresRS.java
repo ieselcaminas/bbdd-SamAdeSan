@@ -1,4 +1,6 @@
-public enum ColoresDeSocialNetwork {
+package RedSocial_SamuelAded;
+
+public enum ColoresRS {
     BLACK("\u001B[30m"),
     WHITE("\u001B[37m"),
     BLUE("\u001B[38;2;40;177;249m"),
@@ -9,9 +11,10 @@ public enum ColoresDeSocialNetwork {
 
     private final String color;
 
-    ColoresDeSocialNetwork(String code) {
+    ColoresRS(String code) {
         this.color = code;
     }
+
     public String getCode(){
         return this.color;
     }

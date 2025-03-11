@@ -1,3 +1,5 @@
+package RedSocial_SamuelAded;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +13,10 @@ public class GestionPosts {
         int opcion;
         // Opciones de la sección.
         while (true) {
-            System.out.println(ColoresDeSocialNetwork.BLUE.getCode() +
+            System.out.println(azul() +
                     "____________________________________________________________\n" +
-                    " 1 - Postear | 2 - Listar mis Posts ||" + ColoresDeSocialNetwork.RED.getCode() + " 4 - Salir de Posts  " + ColoresDeSocialNetwork.BLUE.getCode() + "|\n" +
-                    "------------------------------------------------------------" + ColoresDeSocialNetwork.RESET.getCode()
+                    " 1 - Postear | 2 - Listar mis Posts ||" + rojo() + " 4 - Salir de Posts  " + azul() + "|\n" +
+                    "------------------------------------------------------------" + rset()
             );
             opcion = sc.nextInt();
             switch (opcion) {
@@ -26,15 +28,16 @@ public class GestionPosts {
                 case 4:
                     return;
                 default:
-                    System.out.println(ColoresDeSocialNetwork.RED.getCode() + "NO VÁLIDO. ERROR\n" +
-                            "Introduzca de nuevo un botón válido." + ColoresDeSocialNetwork.RESET.getCode()
+                    System.out.println(rojo() +
+                            "NO VÁLIDO. ERROR\n" +
+                            "Introduzca de nuevo un botón válido." + rset()
                     );
                     break;
             }
         }
     }
     // Método para hacer un post nuevo.
-    public static String nuevoPost() throws SQLException {
+    public static void nuevoPost() throws SQLException {
         Scanner sc = new Scanner(System.in);
         Connection con = MainRS.connection;
         System.out.println("Introduce un texto para el post: ");
@@ -48,7 +51,7 @@ public class GestionPosts {
         pst.setDate(2, fecha);
         pst.setInt(3, MainRS.id_usuario);
         pst.executeUpdate();
-        return "";
+
     }
     // Método para listar todos los post según el ID del usuario.
     private static void listarTodosLosPosts() throws SQLException {
@@ -71,4 +74,7 @@ public class GestionPosts {
 
         }
     }
+    public static String rojo() {return ColoresRS.RED.getCode();}
+    public static String azul() {return ColoresRS.BLUE.getCode();}
+    public static String rset() {return ColoresRS.RESET.getCode();}
 }

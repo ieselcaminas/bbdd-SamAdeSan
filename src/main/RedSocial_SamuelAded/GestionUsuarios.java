@@ -1,3 +1,5 @@
+package RedSocial_SamuelAded;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,41 +11,42 @@ public class GestionUsuarios {
         int opcion;
         // secciones
         while (true) {
-            System.out.println(ColoresDeSocialNetwork.BLUE.getCode() +
+            System.out.println(azul() +
                     "___________________________________________________________________________________________________\n" +
-                    " 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) || " + ColoresDeSocialNetwork.RED.getCode() + "4 - Salir de Usuarios  " + ColoresDeSocialNetwork.BLUE.getCode() + "|\n" +
+                    " 1 - Iniciar Sesión (Loguearse) | 2 - Crear nuevo usuario (Registrarse) || " + rojo() + "4 - Salir de Usuarios  " + azul() + "|\n" +
                     "---------------------------------------------------------------------------------------------------"
             );
             opcion = sc.nextInt();
-
+            // Opción del usuario
             switch (opcion) {
                 case 1:
-                    String usuario  = existeElUsuario();
+                    String usuario = existeElUsuario();
                     if (usuario.isEmpty()) {
-                        System.out.println(ColoresDeSocialNetwork.RED.getCode() +
+                        System.out.println(rojo() +
                                 "El usuario no existe o no se encuentra.\n" +
-                                "Si el problema persiste, puede ser porque está mal el usuario o la contraseña."
+                                "Si el problema persiste, puede ser porque está mal el usuario o la contraseña. "
                         );
-                    }else{
-                        System.out.println(ColoresDeSocialNetwork.GREEN.getCode() + "Logueado con éxito!");
+                    } else {
+                        System.out.println(verde() + "Logueado con éxito!");
                         MainRS.usuario = usuario;
                         break;
                     }
                     break;
                 case 2:
-                    System.out.println(ColoresDeSocialNetwork.YELLOW.getCode() + "Usuario en la cuenta: " + insertarNuevoUsuario());
+                    System.out.println(verde() + "Usuario creado con éxito" + insertarNuevoUsuario() + rset());
                     break;
                 case 4:
-                    System.out.println("Saliendo de Usuarios...");
+                    System.out.println(amarillo() + "Saliendo de Usuarios..." + rset());
                     MainRS.main(null);
                     return;
                 default:
-                    System.out.println(ColoresDeSocialNetwork.RED.getCode() + "ERROR. Formato no válido (la opción no existe)" + ColoresDeSocialNetwork.RESET.getCode());
+                    System.out.println(rojo() + "ERROR. Formato no válido (la opción no existe)" + rset());
                     break;
             }
         }
     }
 
+    // Método para saber si el usuario está en la BD.
     public static String existeElUsuario() throws SQLException {
         // Creamos la conexión al host.
         java.sql.Connection con = MainRS.connection;
@@ -66,9 +69,10 @@ public class GestionUsuarios {
             MainRS.id_usuario = rs.getInt(1);
             return usuario;
         }
-
         return "";
     }
+
+    // Método para insertar un usuario existente de la BD.
     public static String insertarNuevoUsuario() throws SQLException {
         // Insertamos un usuario con los datos que queremos poner a demás de conectarnos al host
         java.sql.Connection con = MainRS.connection;
@@ -90,5 +94,11 @@ public class GestionUsuarios {
         ps.setString(3, contrasena);
         ps.executeUpdate();
         return "";
+
     }
+    public static String rojo() {return ColoresRS.RED.getCode();}
+    public static String azul() {return ColoresRS.BLUE.getCode();}
+    public static String amarillo() {return ColoresRS.YELLOW.getCode();}
+    public static String verde() {return ColoresRS.GREEN.getCode();}
+    public static String rset() {return ColoresRS.RESET.getCode();}
 }
